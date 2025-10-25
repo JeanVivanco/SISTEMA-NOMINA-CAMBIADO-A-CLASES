@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Resumen del Sistema{% endblock %}
+{% block content %}
+<h2>Última Nómina: {{ ultima_nomina.aniomes }}</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Empleado</th><th>Sueldo</th><th>Bono</th><th>IESS</th><th>Préstamo</th><th>Neto</th></tr>
+    </thead>
+    <tbody>
+        {% for d in detalles %}
+        <tr>
+            <td>{{ d.empleado.nombre }}</td>
+            <td>{{ d.sueldo }}</td>
+            <td>{{ d.bono }}</td>
+            <td>{{ d.iess }}</td>
+            <td>{{ d.prestamo }}</td>
+            <td>{{ d.neto }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Estadísticas</h3>
+<ul>
+    <li>Total de empleados: {{ total_empleados }}</li>
+    <li>Total neto pagado en el mes: {{ total_neto_mes }}</li>
+    <li>Promedio de sueldos: {{ promedio_sueldo|floatformat:2 }}</li>
+</ul>
+{% endblock %}

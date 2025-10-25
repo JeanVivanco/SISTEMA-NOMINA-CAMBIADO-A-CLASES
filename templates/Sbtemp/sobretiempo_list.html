@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Registro de Sobretiempos{% endblock %}
+{% block content %}
+<h2>Sobretiempos</h2>
+
+<form method="get" class="mb-3 row g-2">
+    <div class="col-md-3">
+        <input type="text" name="empleado" class="form-control" placeholder="ID Empleado" value="{{ request.GET.empleado }}">
+    </div>
+    <div class="col-md-3">
+        <input type="text" name="tipo" class="form-control" placeholder="Código Tipo" value="{{ request.GET.tipo }}">
+    </div>
+    <div class="col-md-3">
+        <input type="date" name="desde" class="form-control" value="{{ request.GET.desde }}">
+    </div>
+    <div class="col-md-3">
+        <input type="date" name="hasta" class="form-control" value="{{ request.GET.hasta }}">
+    </div>
+    <div class="col-md-12 mt-2">
+        <button type="submit" class="btn btn-outline-primary">Filtrar</button>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Empleado</th>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Horas</th>
+            <th>Valor</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for registro in registros %}
+        <tr>
+            <td>{{ registro.empleado.nombre }}</td>
+            <td>{{ registro.fecha_registro }}</td>
+            <td>{{ registro.tipo_sobretiempo.descripcion }}</td>
+            <td>{{ registro.numero_horas }}</td>
+            <td>{{ registro.valor }}</td>
+            <td>
+                <a href="{% url 'sbtemp_app:sobretiempo_update' registro.pk %}" class="btn btn-sm btn-warning">Editar</a>
+                <a href="{% url 'sbtemp_app:sobretiempo_delete' registro.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">No hay registros de sobretiempo.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'sbtemp_app:sobretiempo_create' %}" class="btn btn-primary mb-3">➕ Nuevo Registro</a>
+{% endblock %}

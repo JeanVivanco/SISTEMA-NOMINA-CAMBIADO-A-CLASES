@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}{{ view.object|default:"Nueva Nómina" }}{% endblock %}
+{% block content %}
+<h2>{{ view.object|default:"Nueva Nómina" }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a href="{% url 'nomina_app:nomina_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

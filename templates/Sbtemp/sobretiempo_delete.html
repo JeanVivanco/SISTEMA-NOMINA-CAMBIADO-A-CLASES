@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Eliminar Registro{% endblock %}
+{% block content %}
+<h2>¿Eliminar el sobretiempo de {{ object.empleado.nombre }} del {{ object.fecha_registro }}?</h2>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a href="{% url 'sbtemp_app:sobretiempo_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

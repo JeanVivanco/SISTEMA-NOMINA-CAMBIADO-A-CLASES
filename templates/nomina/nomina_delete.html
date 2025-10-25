@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Eliminar Nómina{% endblock %}
+{% block content %}
+<h2>¿Eliminar la nómina de {{ object.aniomes }}?</h2>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a href="{% url 'nomina_app:nomina_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
