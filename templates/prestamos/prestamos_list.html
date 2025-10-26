@@ -32,8 +32,8 @@
                 <td>${{ p.monto_pagar }}</td>
                 <td>${{ p.saldo }}</td>
                 <td>
-                    <a href="{% url 'editar_prestamo' p.id %}" class="btn btn-sm btn-warning">Editar</a>
-                    <a href="{% url 'eliminar_prestamo' p.id %}" class="btn btn-sm btn-danger">🗑️ Eliminar</a>
+                    <a href="{% url 'prestamos:editar_prestamo' p.id %}" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="{% url 'prestamos:eliminar_prestamo' p.id %}" class="btn btn-sm btn-danger">🗑️ Eliminar</a>
                 </td>
             </tr>
             {% empty %}

@@ -83,7 +83,12 @@ class NominaDetalleCreateView(LoginRequiredMixin, CreateView):
     template_name = 'nomina/nomina_detalle_form.html'
     
     def get_success_url(self):
-        return reverse_lazy('nomina_detail', kwargs={'pk': self.kwargs['nomina_id']})
+        return reverse_lazy('nomina_app:nomina_detail', kwargs={'pk': self.kwargs['nomina_id']})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['nomina_id'] = self.kwargs['nomina_id']
+        return context
     
     def form_valid(self, form):
         form.instance.nomina = get_object_or_404(Nomina, pk=self.kwargs['nomina_id'])
