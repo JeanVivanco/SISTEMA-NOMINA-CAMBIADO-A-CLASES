@@ -1,10 +1,43 @@
 {% extends 'base.html' %}
+
+{% block title %}{{ view.object|default:"Nuevo Sobretiempo" }}{% endblock %}
+
 {% block content %}
-<h2>{{ view.object|default:"Nuevo Sobretiempo" }}</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Guardar</button>
-    <a href="{% url 'sbtemp_app:sobretiempo_list' %}" class="btn btn-secondary">Cancelar</a>
-</form>
+<div class="container py-5 d-flex justify-content-center">
+    <div class="col-lg-6 col-md-8">
+
+        <!-- Card del formulario -->
+        <div class="card shadow-lg rounded-4 border-0">
+            <!-- Cabecera -->
+            <div class="card-header bg-primary text-white text-center py-3 rounded-top-4">
+                <h4 class="mb-0 fw-bold">
+                    <i class="bi bi-clock-fill me-2"></i> {{ view.object|default:"Nuevo Sobretiempo" }}
+                </h4>
+            </div>
+
+            <!-- Cuerpo del formulario -->
+            <div class="card-body p-5">
+                <form method="post" class="row g-3">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <div class="d-flex justify-content-between mt-4 flex-wrap gap-2">
+                        <button type="submit" class="btn btn-success btn-lg px-4 shadow-sm">
+                            <i class="bi bi-check-circle-fill me-1"></i> Guardar
+                        </button>
+                        <a href="{% url 'sbtemp_app:sobretiempo_list' %}" class="btn btn-outline-secondary btn-lg px-4">
+                            <i class="bi bi-x-circle-fill me-1"></i> Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Pie de card opcional -->
+            <div class="card-footer text-center bg-light py-2 small text-muted rounded-bottom-4">
+                <i class="bi bi-info-circle-fill me-1 text-primary"></i> Ingresa los datos del sobretiempo correctamente
+            </div>
+        </div>
+
+    </div>
+</div>
 {% endblock %}

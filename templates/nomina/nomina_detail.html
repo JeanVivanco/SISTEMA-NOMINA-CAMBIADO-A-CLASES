@@ -1,41 +1,82 @@
 {% extends 'base.html' %}
 {% block title %}Detalle de Nómina {{ nomina.aniomes }}{% endblock %}
+
 {% block content %}
-<h2>Nómina {{ nomina.aniomes }}</h2>
-<p><strong>Total Ingresos:</strong> {{ nomina.tot_ing }}</p>
-<p><strong>Total Descuentos:</strong> {{ nomina.tot_des }}</p>
-<p><strongNeto Pagado:</strong> {{ nomina.neto }}</p>
+<div class="container py-5">
 
-<a href="{% url 'nomina_app:nomina_detalle_create' nomina.pk %}" class="btn btn-success mb-3">Agregar Detalle</a>
+    <!-- Encabezado -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary">
+            <i class="bi bi-journal-text"></i> Nómina {{ nomina.aniomes }}
+        </h2>
+        <a href="{% url 'nomina_app:nomina_detalle_create' nomina.pk %}" class="btn btn-success btn-lg shadow-sm">
+            <i class="bi bi-plus-circle"></i> Agregar Detalle
+        </a>
+    </div>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Empleado</th>
-            <th>Sueldo</th>
-            <th>Bono</th>
-            <th>IESS</th>
-            <th>Préstamo</th>
-            <th>Total Ingreso</th>
-            <th>Total Descuento</th>
-            <th>Neto</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for detalle in nomina.detalles.all %}
-        <tr>
-            <td>{{ detalle.empleado.nombre }}</td>
-            <td>{{ detalle.sueldo }}</td>
-            <td>{{ detalle.bono }}</td>
-            <td>{{ detalle.iess }}</td>
-            <td>{{ detalle.prestamo }}</td>
-            <td>{{ detalle.tot_ing }}</td>
-            <td>{{ detalle.tot_des }}</td>
-            <td>{{ detalle.neto }}</td>
-        </tr>
-        {% empty %}
-        <tr><td colspan="8">No hay detalles registrados para esta nómina.</td></tr>
-        {% endfor %}
-    </tbody>
-</table>
+    <!-- Resumen de Nómina -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-3">
+                <h6 class="text-muted">Total Ingresos</h6>
+                <p class="fw-bold fs-4 text-success">${{ nomina.tot_ing }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-3">
+                <h6 class="text-muted">Total Descuentos</h6>
+                <p class="fw-bold fs-4 text-danger">${{ nomina.tot_des }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-3">
+                <h6 class="text-muted">Neto Pagado</h6>
+                <p class="fw-bold fs-4 text-primary">${{ nomina.neto }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla de Detalles -->
+    <div class="card shadow-sm rounded-4">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light text-center">
+                        <tr>
+                            <th>Empleado</th>
+                            <th>Sueldo</th>
+                            <th>Bono</th>
+                            <th>IESS</th>
+                            <th>Préstamo</th>
+                            <th>Total Ingreso</th>
+                            <th>Total Descuento</th>
+                            <th>Neto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for detalle in nomina.detalles.all %}
+                        <tr class="text-center">
+                            <td class="text-start fw-semibold">{{ detalle.empleado.nombre }}</td>
+                            <td>${{ detalle.sueldo }}</td>
+                            <td>${{ detalle.bono }}</td>
+                            <td>${{ detalle.iess }}</td>
+                            <td>${{ detalle.prestamo }}</td>
+                            <td>${{ detalle.tot_ing }}</td>
+                            <td>${{ detalle.tot_des }}</td>
+                            <td class="fw-bold text-primary">${{ detalle.neto }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center text-muted py-4">
+                                <i class="bi bi-info-circle"></i> No hay detalles registrados para esta nómina.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock %}

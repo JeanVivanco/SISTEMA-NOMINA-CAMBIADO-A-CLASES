@@ -1,10 +1,44 @@
 {% extends 'base.html' %}
+
 {% block title %}Eliminar Registro{% endblock %}
+
 {% block content %}
-<h2>¿Eliminar el sobretiempo de {{ object.empleado.nombre }} del {{ object.fecha_registro }}?</h2>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Eliminar</button>
-    <a href="{% url 'sbtemp_app:sobretiempo_list' %}" class="btn btn-secondary">Cancelar</a>
-</form>
+<div class="container py-5 d-flex justify-content-center">
+    <div class="col-lg-5 col-md-7">
+
+        <!-- Card de confirmación -->
+        <div class="card shadow-lg rounded-4 border-0">
+            <!-- Cabecera -->
+            <div class="card-header bg-danger text-white text-center py-3 rounded-top-4">
+                <h4 class="mb-0 fw-bold">
+                    <i class="bi bi-trash-fill"></i> Eliminar Sobretiempo
+                </h4>
+            </div>
+
+            <!-- Cuerpo -->
+            <div class="card-body p-4 text-center">
+                <p class="mb-4 fs-6">
+                    ¿Seguro que deseas eliminar el sobretiempo de <strong>{{ object.empleado.nombre }}</strong> del
+                    <strong>{{ object.fecha_registro|date:"d/m/Y" }}</strong>?
+                </p>
+
+                <form method="post" class="d-flex justify-content-center gap-3 flex-wrap">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-lg px-4 shadow-sm">
+                        <i class="bi bi-check-circle-fill"></i> Sí, eliminar
+                    </button>
+                    <a href="{% url 'sbtemp_app:sobretiempo_list' %}" class="btn btn-outline-secondary btn-lg px-4">
+                        <i class="bi bi-x-circle-fill"></i> Cancelar
+                    </a>
+                </form>
+            </div>
+
+            <!-- Pie de card -->
+            <div class="card-footer text-center bg-light py-2 small text-muted rounded-bottom-4">
+                <i class="bi bi-info-circle"></i> Esta acción no se puede deshacer
+            </div>
+        </div>
+
+    </div>
+</div>
 {% endblock %}

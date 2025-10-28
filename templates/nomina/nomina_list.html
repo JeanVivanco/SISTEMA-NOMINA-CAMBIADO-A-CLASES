@@ -1,39 +1,76 @@
 {% extends 'base.html' %}
 {% block title %}Lista de Nóminas{% endblock %}
+
 {% block content %}
-<h2>Nóminas</h2>
-<a href="{% url 'nomina_app:nomina_create' %}" class="btn btn-primary mb-3">➕ Nueva Nómina</a>
-<table class="table table-bordered">
-    <form method="get" class="mb-3 d-flex">
-        <input type="text" name="q" class="form-control me-2" placeholder="Buscar por año/mes..." value="{{ request.GET.q }}">
-        <button type="submit" class="btn btn-outline-primary">Buscar</button>
+<div class="container py-5">
+
+    <!-- Encabezado -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary">
+            <i class="bi bi-journal-text"></i> Nóminas
+        </h2>
+        <a href="{% url 'nomina_app:nomina_create' %}" class="btn btn-success btn-lg shadow-sm">
+            <i class="bi bi-plus-circle-fill"></i> Nueva Nómina
+        </a>
+    </div>
+
+    <!-- Buscador -->
+    <form method="get" class="mb-4 d-flex gap-2 flex-wrap">
+        <input type="text" name="q" class="form-control flex-grow-1" placeholder="Buscar por año/mes..."
+            value="{{ request.GET.q }}">
+        <button type="submit" class="btn btn-outline-primary px-4">
+            <i class="bi bi-search"></i> Buscar
+        </button>
     </form>
-    
-    <thead>
-        <tr>
-            <th>Año/Mes</th>
-            <th>Total Ingresos</th>
-            <th>Total Descuentos</th>
-            <th>Neto</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for nomina in nominas %}
-        <tr>
-            <td>{{ nomina.aniomes }}</td>
-            <td>{{ nomina.tot_ing }}</td>
-            <td>{{ nomina.tot_des }}</td>
-            <td>{{ nomina.neto }}</td>
-            <td>
-                <a href="{% url 'nomina_app:nomina_detail' nomina.pk %}" class="btn btn-sm btn-info">Ver</a>
-                <a href="{% url 'nomina_app:nomina_update' nomina.pk %}" class="btn btn-sm btn-warning">Editar</a>
-                <a href="{% url 'nomina_app:nomina_delete' nomina.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr><td colspan="5">No hay nóminas registradas.</td></tr>
-        {% endfor %}
-    </tbody>
-</table>
+
+    <!-- Tabla de Nóminas -->
+    <div class="card shadow-sm rounded-4">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light text-center">
+                        <tr>
+                            <th>Año/Mes</th>
+                            <th>Total Ingresos</th>
+                            <th>Total Descuentos</th>
+                            <th>Neto</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for nomina in nominas %}
+                        <tr class="text-center">
+                            <td class="fw-semibold">{{ nomina.aniomes }}</td>
+                            <td class="text-success fw-bold">${{ nomina.tot_ing }}</td>
+                            <td class="text-danger fw-bold">${{ nomina.tot_des }}</td>
+                            <td class="fw-bold text-primary">${{ nomina.neto }}</td>
+                            <td class="d-flex justify-content-center gap-1 flex-wrap">
+                                <a href="{% url 'nomina_app:nomina_detail' nomina.pk %}"
+                                    class="btn btn-info btn-sm px-3">
+                                    <i class="bi bi-eye-fill"></i> Ver
+                                </a>
+                                <a href="{% url 'nomina_app:nomina_update' nomina.pk %}"
+                                    class="btn btn-warning btn-sm px-3">
+                                    <i class="bi bi-pencil-fill"></i> Editar
+                                </a>
+                                <a href="{% url 'nomina_app:nomina_delete' nomina.pk %}"
+                                    class="btn btn-danger btn-sm px-3">
+                                    <i class="bi bi-trash-fill"></i> Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                <i class="bi bi-info-circle"></i> No hay nóminas registradas.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock %}
